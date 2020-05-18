@@ -7,7 +7,7 @@
 // @match     https://signin.aws.amazon.com/saml
 // @grant     GM_getResourceText
 // @grant     GM_addStyle
-// @require   https://sdk.amazonaws.com/js/aws-sdk-2.283.1.min.js
+// @require   https://sdk.amazonaws.com/js/aws-sdk-2.678.0.min.js
 // @require   https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
 // @require   https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js
 // @resource  JQUI-CSS https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css
