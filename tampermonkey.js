@@ -170,6 +170,10 @@
   function displayCredentials(accountNumber, roleName, accessKey, secretAccessKey, sessionToken, expiration) {
     const expireTime = new Date(expiration).toLocaleTimeString();
 
+    const storage = window.localStorage;
+    const defaultProfileName = `${accountNumber}-${roleName}`;
+    const profileName = storage.getItem(defaultProfileName) ? storage.getItem(defaultProfileName) : defaultProfileName;
+
     // HTML that forms the popup UI.  Note that styles are added via GM_addStyle further down
     const popupHTML = `
       <div id="backdrop">
@@ -203,14 +207,16 @@ set AWS_SESSION_TOKEN="${sessionToken}"</textarea>
             </div>
           </div>
           <div class="option">Option 2: Add a profile to your AWS credentials file</div>
-          <p>Paste the following text into your AWS credentials file (typically found at ~/.aws/credentials).
+          <p>Paste the following commands into your command line to update your AWS credentials file (typically found at ~/.aws/credentials).
             <a href="https://docs.aws.amazon.com/console/singlesignon/user-portal/aws-accounts/command-line/get-credentials/option2">Learn More</a>
           </p>
+          <p>
+            Profile Name: <input id="profileInput" type="text" value="${profileName}" spellcheck="false">
+          </p>
           <div class="codepanel">
-            <textarea class="code-box" rows="4" spellcheck="false">[${accountNumber}-${roleName}]
-aws_access_key_id = ${accessKey}
-aws_secret_access_key = ${secretAccessKey}
-aws_session_token = ${sessionToken}</textarea>
+            <textarea class="code-box" id="option2" rows="4" spellcheck="false">aws configure set profile.${profileName}.aws_access_key_id "${accessKey}"
+aws configure set profile.${profileName}.aws_secret_access_key "${secretAccessKey}"
+aws configure set profile.${profileName}.aws_session_token "${sessionToken}"</textarea>
           </div>
           <div class="option">Option 3: Use individual values in your AWS service client</div>
           <div id="raw-values">
@@ -226,8 +232,6 @@ aws_session_token = ${sessionToken}</textarea>
 
     // Remember which platform option the user has selected
     const TAB_SELECTION_KEY = 'envvar/tab/selected';
-    const storage = window.localStorage;
-
     let activeTab = 0;
     try {
       activeTab = storage.getItem(TAB_SELECTION_KEY);
@@ -236,10 +240,22 @@ aws_session_token = ${sessionToken}</textarea>
       var tabIndex = ui.newTab.parent().children().index(ui.newTab);
       storage.setItem(TAB_SELECTION_KEY, tabIndex);
     }
+    function onProfileChange() {
+      const newProfileName = $('#profileInput').val();
+      
+      $('#option2').val(
+        `aws configure set profile.${newProfileName}.aws_access_key_id "${accessKey}"
+aws configure set profile.${newProfileName}.aws_secret_access_key "${secretAccessKey}"
+aws configure set profile.${newProfileName}.aws_session_token "${sessionToken}"`);
+
+      storage.setItem(defaultProfileName, newProfileName);
+    }
+
 
     const popup = $(popupHTML);
     $('body').append(popup);
     $('#tabs').tabs({active: activeTab, activate: onTabChange});
+    $('#profileInput').on('input', onProfileChange);
     $('#credentials').click((event)=> { event.stopPropagation(); });
     $('#backdrop').scroll((event)=> { event.stopPropagation(); });
     $('#backdrop').click(()=> { $('#backdrop').remove(); });
