@@ -191,17 +191,17 @@
               <li><a href="#powershell">PowerShell</a></li>
             </ul>
             <div class="codepanel" id="linux">
-              <textarea class="code-box" rows="3" spellcheck="false">export AWS_ACCESS_KEY_ID="${accessKey}"
+              <textarea class="code-box" rows="3" spellcheck="false" readonly>export AWS_ACCESS_KEY_ID="${accessKey}"
 export AWS_SECRET_ACCESS_KEY="${secretAccessKey}"
 export AWS_SESSION_TOKEN="${sessionToken}"</textarea>
             </div>
             <div class="codepanel" id="windows">
-              <textarea class="code-box" rows="3" spellcheck="false">set AWS_ACCESS_KEY_ID="${accessKey}"
+              <textarea class="code-box" rows="3" spellcheck="false" readonly>set AWS_ACCESS_KEY_ID="${accessKey}"
 set AWS_SECRET_ACCESS_KEY="${secretAccessKey}"
 set AWS_SESSION_TOKEN="${sessionToken}"</textarea>
             </div>
             <div class="codepanel" id="powershell">
-              <textarea class="code-box" rows="3" spellcheck="false">Set-AWSCredential -AccessKey "${accessKey}" \`
+              <textarea class="code-box" rows="3" spellcheck="false" readonly>Set-AWSCredential -AccessKey "${accessKey}" \`
 -SecretKey "${secretAccessKey}" \`
 -SessionToken "${sessionToken}"</textarea>
             </div>
@@ -211,10 +211,10 @@ set AWS_SESSION_TOKEN="${sessionToken}"</textarea>
             <a href="https://docs.aws.amazon.com/console/singlesignon/user-portal/aws-accounts/command-line/get-credentials/option2">Learn More</a>
           </p>
           <p>
-            Profile Name: <input id="profileInput" type="text" value="${profileName}" spellcheck="false">
+            &nbsp;&nbsp;&nbsp; Profile Name: <input id="profileInput" type="text" value="${profileName}" spellcheck="false">
           </p>
           <div class="codepanel">
-            <textarea class="code-box" id="option2" rows="4" spellcheck="false">aws configure set profile.${profileName}.aws_access_key_id "${accessKey}"
+            <textarea class="code-box" id="option2" rows="4" spellcheck="false" readonly>aws configure set profile.${profileName}.aws_access_key_id "${accessKey}"
 aws configure set profile.${profileName}.aws_secret_access_key "${secretAccessKey}"
 aws configure set profile.${profileName}.aws_session_token "${sessionToken}"</textarea>
           </div>
@@ -338,6 +338,7 @@ aws configure set profile.${newProfileName}.aws_session_token "${sessionToken}"`
     }
     #tabs .ui-tabs-panel {
       padding: 0;
+      padding-left: 10px;
     }
 
     #raw-values {
@@ -350,7 +351,7 @@ aws configure set profile.${newProfileName}.aws_session_token "${sessionToken}"`
     #raw-values span {
       padding-top: 10px;
     }
-    #raw-values input {
+    input {
       background: #FAFAFA;
       padding: 4px 10px;
       border-left: solid 3px #FF9900;
@@ -360,6 +361,7 @@ aws configure set profile.${newProfileName}.aws_session_token "${sessionToken}"`
       font-family: monospace !important;
       white-space: pre;
       font-size: 1em;
+      width: 520px;
     }
 
     .code-box {
