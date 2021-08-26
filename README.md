@@ -1,5 +1,7 @@
 ## SAML CLI Userscript
 
+> :warning: This User Script has been tested and confirmed working in Firefox.  If you are using a different browser then you may observe a "Network failure" error due to the security settings of those browsers.
+
 This project contains a [userscript](https://en.wikipedia.org/wiki/Userscript) which modifies the AWS SAML landing page to make it easier to get temporary AWS access keys for programmatic access to AWS services.  This script adds a new button to the SAML landing page which opens a popup containing temporary AWS access keys for the select role.
 
 ### AWS Single Sign-On
